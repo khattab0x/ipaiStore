@@ -1,0 +1,10 @@
+Package: com.ipaistore.credit
+Name: ipaiStoreCredit
+Description: Shows a one-time credit message (distributed by ipaiStore, tweak by 7md)
+Maintainer: ipaiStore
+Author: ipaiStore
+Section: Tweaks
+Depends: mobilesubstrate
+Architecture: iphoneos-arm
+Version: 1.0
+Homepage: https://t.me/ipaiStore
