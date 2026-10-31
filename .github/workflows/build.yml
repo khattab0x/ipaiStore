@@ -1,0 +1,29 @@
+name: Build deb
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tools
+        run: brew install ldid dpkg make
+      - name: Install Theos
+        run: |
+          git clone --recursive https://github.com/theos/theos.git $HOME/theos
+          git clone --depth=1 https://github.com/theos/sdks.git $HOME/theos/sdks_tmp
+          mkdir -p $HOME/theos/sdks
+          cp -R $HOME/theos/sdks_tmp/*.sdk $HOME/theos/sdks/
+      - name: Build
+        run: |
+          export THEOS=$HOME/theos
+          gmake package FINALPACKAGE=1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ipaiStoreCredit
+          path: |
+            packages/*.deb
+            .theos/obj/*.dylib
+            .theos/obj/arm64/*.dylib
